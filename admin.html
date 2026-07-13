@@ -27,7 +27,6 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { color: #d4af37; display: block; margin-bottom: 5px; }
         .form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; }
-        .form-group button { width: 100%; padding: 10px; background: #d4af37; border: none; cursor: pointer; font-weight: bold; }
         .carro-item { background: #0a0a0a; padding: 15px; margin-bottom: 10px; border-left: 4px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
         .btn-delete { background: #ff6b6b; color: #fff; padding: 8px 15px; border: none; cursor: pointer; }
         .empty { text-align: center; color: #999; padding: 30px; }
@@ -41,8 +40,8 @@
     <div class="login-box">
         <h1>🔐 Login</h1>
         <div id="loginMsg" class="msg"></div>
-        <input type="text" id="user" placeholder="Usuário" value="admin">
-        <input type="password" id="pass" placeholder="Senha" value="1234">
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
         <button type="button" onclick="login()">Entrar</button>
         <div class="link" onclick="alert('Entre em contato: admin@dominus.com')">Esqueci minha senha</div>
     </div>
@@ -97,6 +96,9 @@ function logout() {
         ok = false;
         document.getElementById('loginContainer').style.display = 'flex';
         document.getElementById('adminContainer').style.display = 'none';
+        document.getElementById('user').value = '';
+        document.getElementById('pass').value = '';
+        document.getElementById('loginMsg').textContent = '';
     }
 }
 
@@ -116,6 +118,7 @@ function addcar() {
     document.getElementById('modelo').value = '';
     document.getElementById('ano').value = '';
     document.getElementById('preco').value = '';
+    document.getElementById('imagem').value = '';
     listar();
 }
 
