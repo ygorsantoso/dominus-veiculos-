@@ -24,7 +24,7 @@
         .carros-section { max-width: 1200px; margin: 4rem auto; padding: 2rem; }
         .carros-section h2 { font-size: 2.5rem; color: #d4af37; text-align: center; margin-bottom: 3rem; }
         .carros-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
-        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; }
+        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: 0.3s; }
         .carro-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.3); }
         .carro-img { width: 100%; height: 250px; object-fit: cover; background: #333; }
         .carro-info { padding: 1.5rem; }
@@ -94,7 +94,6 @@ function carregarCarros() {
 }
 
 carregarCarros();
-setInterval(carregarCarros, 2000);
 </script>
 
 </body>
