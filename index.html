@@ -1,100 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMINUS VEÍCULOS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: #fff; }
-        
-        header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { color: #d4af37; font-size: 1.8rem; }
-        header a { background: #d4af37; color: #0a0a0a; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 700; }
-        header a:hover { background: white; }
-
-        .hero { background: linear-gradient(135deg, #1a1a1a, #d4af37); padding: 6rem 2rem; text-align: center; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.3rem; margin-bottom: 2rem; color: #ddd; }
-
-        .about { max-width: 1200px; margin: 4rem auto; padding: 3rem 2rem; text-align: center; }
-        .about h2 { font-size: 2.5rem; color: #d4af37; margin-bottom: 1.5rem; }
-
-        .carros-section { max-width: 1200px; margin: 4rem auto; padding: 2rem; }
-        .carros-section h2 { font-size: 2.5rem; color: #d4af37; text-align: center; margin-bottom: 3rem; }
-        .carros-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
-        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: 0.3s; }
-        .carro-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.3); }
-        .carro-img { width: 100%; height: 250px; object-fit: cover; background: #333; }
-        .carro-info { padding: 1.5rem; }
-        .carro-title { font-size: 1.3rem; font-weight: 700; color: #d4af37; }
-        .carro-year { color: #999; font-size: 0.9rem; }
-        .carro-price { font-size: 1.8rem; font-weight: 800; color: #fff; margin: 0.5rem 0; }
-        .no-carros { text-align: center; color: #999; padding: 3rem; }
-
-        footer { background: #1a1a1a; padding: 2rem; text-align: center; border-top: 2px solid #d4af37; color: #999; margin-top: 4rem; }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 1rem; }
-            .hero h1 { font-size: 2rem; }
-            .carros-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <title>Admin - DOMINUS</title>
 </head>
 <body>
-
-<header>
-    <h1>🏎️ DOMINUS VEÍCULOS</h1>
-    <a href="admin.html">🔐 Painel Admin</a>
-</header>
-
-<section class="hero">
-    <h1>DOMINUS VEÍCULOS</h1>
-    <p>Os melhores carros com os melhores preços</p>
-</section>
-
-<section class="about">
-    <h2>Sobre Nós</h2>
-    <p>Bem-vindo à DOMINUS VEÍCULOS! Somos especialistas em encontrar o carro perfeito para você.</p>
-</section>
-
-<section class="carros-section">
-    <h2>Nossos Carros</h2>
-    <div class="carros-grid" id="carrosContainer">
-        <div class="no-carros">Carregando carros...</div>
-    </div>
-</section>
-
-<footer>
-    <p>&copy; 2024 DOMINUS VEÍCULOS - Todos os direitos reservados</p>
-    <p>📧 contato@dominus.com | 📞 (11) 99999-9999</p>
-</footer>
-
-<script>
-function carregarCarros() {
-    const carros = JSON.parse(localStorage.getItem('carros')) || [];
-    const container = document.getElementById('carrosContainer');
-
-    if (carros.length === 0) {
-        container.innerHTML = '<div class="no-carros">Nenhum carro cadastrado</div>';
-        return;
-    }
-
-    container.innerHTML = carros.map(car => `
-        <div class="carro-card">
-            <div class="carro-img" style="background-image: url('${car.imagem}'); background-size: cover;"></div>
-            <div class="carro-info">
-                <div class="carro-title">${car.marca} ${car.modelo}</div>
-                <div class="carro-year">📅 ${car.ano}</div>
-                <div class="carro-price">R$ ${parseFloat(car.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
-            </div>
-        </div>
-    `).join('');
-}
-
-carregarCarros();
-</script>
-
+    <script>
+        window.location.href = 'admin.html';
+    </script>
 </body>
 </html>
