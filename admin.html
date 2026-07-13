@@ -8,7 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: #fff; }
-
+        
         .login-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0a0a0a, #1a1a1a); }
         .login-box { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 3rem; width: 100%; max-width: 400px; }
         .login-box h1 { color: #d4af37; text-align: center; margin-bottom: 2rem; font-size: 2rem; }
@@ -16,68 +16,64 @@
         .login-box input:focus { outline: none; border-color: white; }
         .login-box button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; font-size: 1rem; cursor: pointer; }
         .login-box button:hover { background: white; }
-        .msg { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; min-height: 20px; }
-        .msg.error { color: #ff6b6b; }
-        .msg.success { color: #4caf50; }
+        .msg { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; color: #ff6b6b; }
+        .msg.ok { color: #4caf50; }
         .link-esqueci { text-align: center; margin-top: 1rem; }
         .link-esqueci a { color: #d4af37; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
         .link-esqueci a:hover { text-decoration: underline; }
-
+        
         .admin-screen { display: none; }
         .admin-header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
         .admin-header h1 { color: #d4af37; }
         .header-buttons { display: flex; gap: 0.5rem; }
-        .btn-alterar { background: #4a90e2; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .btn-alterar { background: #4a90e2; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
         .btn-alterar:hover { background: #357abd; }
-        .logout { background: #ff6b6b; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .logout { background: #ff6b6b; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
         .logout:hover { background: #ff5252; }
-
+        
         .admin-content { max-width: 1200px; margin: 2rem auto; padding: 2rem; }
         .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #d4af37; }
-        .tab-btn { background: transparent; color: #999; border: none; padding: 1rem 2rem; cursor: pointer; font-weight: 600; border-bottom: 3px solid transparent; font-size: 1rem; }
+        .tab-btn { background: transparent; color: #999; border: none; padding: 1rem 2rem; cursor: pointer; font-weight: 600; border-bottom: 3px solid transparent; }
         .tab-btn.active { color: #d4af37; border-bottom-color: #d4af37; }
-
+        
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
+        
         .form-box { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; }
         .form-box h2 { color: #d4af37; margin-bottom: 1.5rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; color: #d4af37; margin-bottom: 0.5rem; font-weight: 600; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-family: 'Poppins'; font-size: 1rem; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: white; }
-        .form-group textarea { min-height: 100px; resize: vertical; }
-        .form-group button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .form-group input { width: 100%; padding: 0.8rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-family: 'Poppins'; }
+        .form-group input:focus { outline: none; border-color: white; }
+        .form-group button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
         .form-group button:hover { background: white; }
-
+        
         .carros-list { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; }
         .carros-list h2 { color: #d4af37; margin-bottom: 1.5rem; }
-        .carro-item { background: #0a0a0a; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .carro-info { flex: 1; min-width: 200px; }
+        .carro-item { background: #0a0a0a; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
         .carro-info p { margin: 0.3rem 0; color: #ddd; }
         .carro-info strong { color: #d4af37; }
         .btn-delete { background: #ff6b6b; color: #fff; padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
         .btn-delete:hover { background: #ff5252; }
         .empty { text-align: center; color: #999; padding: 2rem; }
-
+        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
         .modal.active { display: flex; }
         .modal-content { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; max-width: 400px; width: 90%; }
         .modal-content h2 { color: #d4af37; margin-bottom: 1.5rem; }
         .modal-close { text-align: right; margin-bottom: 1rem; }
-        .modal-close button { background: #ff6b6b; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .modal-close button { background: #ff6b6b; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
         .modal-close button:hover { background: #ff5252; }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <h1>🔐 Login</h1>
         <div id="loginMsg" class="msg"></div>
-        <input type="text" id="user" placeholder="Usuário" autocomplete="off">
-        <input type="password" id="pass" placeholder="Senha" autocomplete="off">
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
         <button onclick="fazerLogin()">Entrar</button>
         <div class="link-esqueci">
             <a onclick="abrirModalRecuperacao()">Esqueci minha senha</a>
@@ -85,7 +81,6 @@
     </div>
 </div>
 
-<!-- MODAL RECUPERAÇÃO DE SENHA -->
 <div class="modal" id="modalRecuperacao">
     <div class="modal-content">
         <div class="modal-close">
@@ -94,21 +89,20 @@
         <h2>🔑 Recuperar Senha</h2>
         <div id="recuperacaoMsg" class="msg"></div>
         <div class="form-group">
-            <label>Pergunta de Segurança:</label>
-            <p style="color: #ddd; margin-top: 0.5rem; font-size: 0.9rem;">Qual é o nome da sua empresa?</p>
-            <input type="text" id="resposta" placeholder="Digite a resposta" autocomplete="off">
+            <label>Resposta de Segurança:</label>
+            <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">Qual é o nome da sua empresa?</p>
+            <input type="text" id="resposta" placeholder="Digite a resposta">
         </div>
         <div class="form-group">
             <label>Nova Senha</label>
-            <input type="password" id="novaSenha" placeholder="Digite a nova senha" autocomplete="off">
+            <input type="password" id="novaSenha" placeholder="Digite a nova senha">
         </div>
         <div class="form-group">
-            <button onclick="recuperarSenha()">✅ Atualizar Senha</button>
+            <button onclick="recuperarSenha()">✅ Atualizar</button>
         </div>
     </div>
 </div>
 
-<!-- ADMIN SCREEN -->
 <div class="admin-screen" id="adminScreen">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
@@ -120,49 +114,48 @@
 
     <div class="admin-content">
         <div class="tabs">
-            <button class="tab-btn active" onclick="abrirTab(event, 'carros')">📋 Meus Carros</button>
-            <button class="tab-btn" onclick="abrirTab(event, 'adicionar')">➕ Adicionar Carro</button>
+            <button class="tab-btn active" onclick="abrirTab(event, 'carros')">📋 Carros</button>
+            <button class="tab-btn" onclick="abrirTab(event, 'adicionar')">➕ Adicionar</button>
         </div>
 
         <div id="carros" class="tab-content active">
             <div class="carros-list">
-                <h2>Carros Cadastrados</h2>
+                <h2>Meus Carros</h2>
                 <div id="carrosList" class="empty">Nenhum carro cadastrado</div>
             </div>
         </div>
 
         <div id="adicionar" class="tab-content">
             <div class="form-box">
-                <h2>Adicionar Novo Carro</h2>
+                <h2>Novo Carro</h2>
                 <div class="form-group">
                     <label>Marca</label>
-                    <input type="text" id="marca" placeholder="Ex: Toyota">
+                    <input type="text" id="marca">
                 </div>
                 <div class="form-group">
                     <label>Modelo</label>
-                    <input type="text" id="modelo" placeholder="Ex: Corolla">
+                    <input type="text" id="modelo">
                 </div>
                 <div class="form-group">
                     <label>Ano</label>
-                    <input type="number" id="ano" placeholder="Ex: 2024">
+                    <input type="number" id="ano">
                 </div>
                 <div class="form-group">
                     <label>Preço (R$)</label>
-                    <input type="number" id="preco" placeholder="Ex: 150000">
+                    <input type="number" id="preco">
                 </div>
                 <div class="form-group">
                     <label>URL da Imagem</label>
-                    <input type="text" id="imagem" placeholder="https://exemplo.com/imagem.jpg">
+                    <input type="text" id="imagem">
                 </div>
                 <div class="form-group">
-                    <button onclick="adicionarCarro()">✅ Adicionar Carro</button>
+                    <button onclick="adicionarCarro()">✅ Adicionar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL ALTERAR SENHA (quando logado) -->
 <div class="modal" id="modalAlterarSenha">
     <div class="modal-content">
         <div class="modal-close">
@@ -172,47 +165,44 @@
         <div id="alterarMsg" class="msg"></div>
         <div class="form-group">
             <label>Senha Atual</label>
-            <input type="password" id="senhaAtual" placeholder="Digite sua senha atual" autocomplete="off">
+            <input type="password" id="senhaAtual">
         </div>
         <div class="form-group">
             <label>Nova Senha</label>
-            <input type="password" id="novaSenhaAdmin" placeholder="Digite a nova senha" autocomplete="off">
+            <input type="password" id="novaSenhaAdmin">
         </div>
         <div class="form-group">
-            <label>Confirmar Nova Senha</label>
-            <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha" autocomplete="off">
+            <label>Confirmar</label>
+            <input type="password" id="confirmarSenha">
         </div>
         <div class="form-group">
-            <button onclick="alterarSenhaAdmin()">✅ Atualizar Senha</button>
+            <button onclick="alterarSenhaAdmin()">✅ Atualizar</button>
         </div>
     </div>
 </div>
 
 <script>
-// Dados padrão
 let USUARIO = 'admin';
 let SENHA = '1234';
-let RESPOSTA_SEGURANCA = 'dominus';
+let RESPOSTA = 'dominus';
 
-// Carrega dados do localStorage se existirem
-function carregarConfiguracao() {
+function carregarConfig() {
     const config = JSON.parse(localStorage.getItem('dominusConfig')) || {};
     if (config.usuario) USUARIO = config.usuario;
     if (config.senha) SENHA = config.senha;
-    if (config.resposta) RESPOSTA_SEGURANCA = config.resposta;
+    if (config.resposta) RESPOSTA = config.resposta;
 }
 
-function salvarConfiguracao() {
+function salvarConfig() {
     localStorage.setItem('dominusConfig', JSON.stringify({
         usuario: USUARIO,
         senha: SENHA,
-        resposta: RESPOSTA_SEGURANCA
+        resposta: RESPOSTA
     }));
 }
 
-carregarConfiguracao();
+carregarConfig();
 
-// Verifica se já está logado ao carregar a página
 window.addEventListener('load', function() {
     if (localStorage.getItem('adminLogado') === 'sim') {
         document.getElementById('loginScreen').style.display = 'none';
@@ -222,16 +212,10 @@ window.addEventListener('load', function() {
 });
 
 function fazerLogin() {
-    const user = document.getElementById('user').value.trim();
-    const pass = document.getElementById('pass').value.trim();
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
     const msg = document.getElementById('loginMsg');
-
-    if (!user || !pass) {
-        msg.textContent = '❌ Preencha usuário e senha!';
-        msg.className = 'msg error';
-        return;
-    }
-
+    
     if (user === USUARIO && pass === SENHA) {
         localStorage.setItem('adminLogado', 'sim');
         document.getElementById('loginScreen').style.display = 'none';
@@ -240,66 +224,53 @@ function fazerLogin() {
         document.getElementById('pass').value = '';
         carregarCarros();
     } else {
-        msg.textContent = '❌ Usuário ou senha incorretos!';
-        msg.className = 'msg error';
+        msg.textContent = '❌ Dados incorretos!';
     }
 }
 
 function fazerLogout() {
-    if (confirm('Tem certeza que deseja sair?')) {
+    if (confirm('Deseja sair?')) {
         localStorage.removeItem('adminLogado');
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('adminScreen').style.display = 'none';
-        document.getElementById('user').value = '';
-        document.getElementById('pass').value = '';
-        document.getElementById('loginMsg').textContent = '';
     }
 }
 
-function abrirTab(event, tabName) {
-    event.preventDefault();
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-    event.target.classList.add('active');
+function abrirTab(e, tab) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    e.target.classList.add('active');
 }
 
 function adicionarCarro() {
-    const marca = document.getElementById('marca').value.trim();
-    const modelo = document.getElementById('modelo').value.trim();
-    const ano = document.getElementById('ano').value.trim();
-    const preco = document.getElementById('preco').value.trim();
-    const imagem = document.getElementById('imagem').value.trim();
-
+    const marca = document.getElementById('marca').value;
+    const modelo = document.getElementById('modelo').value;
+    const ano = document.getElementById('ano').value;
+    const preco = document.getElementById('preco').value;
+    const imagem = document.getElementById('imagem').value;
+    
     if (!marca || !modelo || !ano || !preco) {
-        alert('❌ Preencha todos os campos obrigatórios!');
+        alert('Preencha todos os campos!');
         return;
     }
-
+    
     const carros = JSON.parse(localStorage.getItem('carros')) || [];
-    carros.push({ 
-        marca, 
-        modelo, 
-        ano, 
-        preco, 
-        imagem: imagem || 'https://via.placeholder.com/300x250?text=Sem+imagem'
-    });
+    carros.push({ marca, modelo, ano, preco, imagem: imagem || 'https://via.placeholder.com/300x250' });
     localStorage.setItem('carros', JSON.stringify(carros));
-
-    alert('✅ Carro adicionado com sucesso!');
+    alert('✅ Carro adicionado!');
     document.getElementById('marca').value = '';
     document.getElementById('modelo').value = '';
     document.getElementById('ano').value = '';
     document.getElementById('preco').value = '';
     document.getElementById('imagem').value = '';
-
     carregarCarros();
 }
 
-function deletarCarro(index) {
-    if (confirm('Tem certeza que deseja deletar este carro?')) {
+function deletarCarro(i) {
+    if (confirm('Deletar?')) {
         const carros = JSON.parse(localStorage.getItem('carros')) || [];
-        carros.splice(index, 1);
+        carros.splice(i, 1);
         localStorage.setItem('carros', JSON.stringify(carros));
         carregarCarros();
     }
@@ -308,24 +279,59 @@ function deletarCarro(index) {
 function carregarCarros() {
     const carros = JSON.parse(localStorage.getItem('carros')) || [];
     const container = document.getElementById('carrosList');
-
+    
     if (carros.length === 0) {
-        container.innerHTML = '<div class="empty">Nenhum carro cadastrado</div>';
+        container.innerHTML = '<div class="empty">Nenhum carro</div>';
         return;
     }
-
-    container.innerHTML = carros.map((car, index) => `
+    
+    container.innerHTML = carros.map((car, i) => `
         <div class="carro-item">
             <div class="carro-info">
                 <p><strong>${car.marca} ${car.modelo}</strong></p>
-                <p>📅 Ano: ${car.ano}</p>
-                <p>💰 Preço: R$ ${parseFloat(car.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+                <p>📅 ${car.ano} | 💰 R$ ${parseFloat(car.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
             </div>
-            <div>
-                <button class="btn-delete" onclick="deletarCarro(${index})">🗑️ Deletar</button>
-            </div>
+            <button class="btn-delete" onclick="deletarCarro(${i})">🗑️</button>
         </div>
     `).join('');
 }
 
-// MODAL RECUPERAÇÃO DE
+function abrirModalRecuperacao() {
+    document.getElementById('modalRecuperacao').classList.add('active');
+}
+
+function fecharModalRecuperacao() {
+    document.getElementById('modalRecuperacao').classList.remove('active');
+}
+
+function recuperarSenha() {
+    const resposta = document.getElementById('resposta').value.toLowerCase();
+    const novaSenha = document.getElementById('novaSenha').value;
+    const msg = document.getElementById('recuperacaoMsg');
+    
+    if (resposta === RESPOSTA && novaSenha) {
+        SENHA = novaSenha;
+        salvarConfig();
+        msg.textContent = '✅ Senha alterada! Faça login novamente.';
+        msg.className = 'msg ok';
+        setTimeout(() => fecharModalRecuperacao(), 2000);
+    } else {
+        msg.textContent = '❌ Resposta incorreta ou senha vazia!';
+    }
+}
+
+function abrirModalAlterarSenha() {
+    document.getElementById('modalAlterarSenha').classList.add('active');
+}
+
+function fecharModalAlterarSenha() {
+    document.getElementById('modalAlterarSenha').classList.remove('active');
+}
+
+function alterarSenhaAdmin() {
+    const atual = document.getElementById('senhaAtual').value;
+    const nova = document.getElementById('novaSenhaAdmin').value;
+    const confirmar = document.getElementById('confirmarSenha').value;
+    const msg = document.getElementById('alterarMsg');
+    
+    if (atual !==
