@@ -11,10 +11,11 @@
         .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .login-box { background: #1a1a1a; border: 2px solid #d4af37; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; }
         .login-box h1 { color: #d4af37; text-align: center; margin-bottom: 30px; }
-        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; }
-        .login-box button { width: 100%; padding: 12px; background: #d4af37; color: #0a0a0a; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 16px; }
+        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; font-size: 16px; }
+        .login-box button { width: 100%; padding: 12px; background: #d4af37; color: #0a0a0a; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 16px; margin-bottom: 10px; }
         .login-box button:hover { background: #fff; }
-        .msg { text-align: center; margin-bottom: 15px; color: #ff6b6b; }
+        .msg { text-align: center; margin-bottom: 15px; color: #ff6b6b; font-weight: bold; }
+        .link { text-align: center; color: #d4af37; cursor: pointer; text-decoration: underline; }
         
         .admin-container { display: none; }
         .admin-header { background: #1a1a1a; padding: 20px; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
@@ -23,12 +24,16 @@
         .logout-btn:hover { background: #ff5252; }
         
         .admin-content { max-width: 1200px; margin: 20px auto; padding: 20px; }
+        .tabs { margin-bottom: 20px; }
+        .tabs button { padding: 12px 20px; background: #d4af37; color: #0a0a0a; border: none; margin-right: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; font-size: 16px; }
+        .tabs button:hover { background: #fff; }
+        
         .form-box { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
         .form-box h2 { color: #d4af37; margin-bottom: 15px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; color: #d4af37; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; }
-        .form-group button { width: 100%; padding: 10px; background: #d4af37; color: #0a0a0a; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; font-size: 16px; }
+        .form-group button { width: 100%; padding: 10px; background: #d4af37; color: #0a0a0a; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; font-size: 16px; }
         .form-group button:hover { background: #fff; }
         
         .carros-list { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; }
@@ -39,6 +44,8 @@
         .btn-delete { background: #ff6b6b; color: #fff; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .btn-delete:hover { background: #ff5252; }
         .empty { text-align: center; color: #999; padding: 30px; }
+        .aba { display: none; }
+        .aba.ativo { display: block; }
     </style>
 </head>
 <body>
@@ -49,30 +56,31 @@
         <div id="loginMsg" class="msg"></div>
         <input type="text" id="user" placeholder="Usuário" value="admin">
         <input type="password" id="pass" placeholder="Senha" value="1234">
-        <button onclick="login()">Entrar</button>
+        <button onclick="fazerLogin()">Entrar</button>
+        <div class="link" onclick="alert('Contate o administrador: admin@dominus.com')">Esqueci minha senha</div>
     </div>
 </div>
 
 <div class="admin-container" id="adminContainer">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
-        <button class="logout-btn" onclick="logout()">Sair</button>
+        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
     </header>
 
     <div class="admin-content">
-        <div style="margin-bottom: 20px;">
-            <button onclick="mostrarAbas('carros')" style="padding: 10px 20px; background: #d4af37; color: #0a0a0a; border: none; margin-right: 10px; cursor: pointer; font-weight: bold; border-radius: 4px;">📋 Carros</button>
-            <button onclick="mostrarAbas('adicionar')" style="padding: 10px 20px; background: #d4af37; color: #0a0a0a; border: none; cursor: pointer; font-weight: bold; border-radius: 4px;">➕ Adicionar</button>
+        <div class="tabs">
+            <button onclick="mudarAba('carros')">📋 Meus Carros</button>
+            <button onclick="mudarAba('adicionar')">➕ Adicionar Carro</button>
         </div>
 
-        <div id="abas-carros">
+        <div id="carros" class="aba ativo">
             <div class="carros-list">
                 <h2>Meus Carros</h2>
                 <div id="carrosList" class="empty">Nenhum carro cadastrado</div>
             </div>
         </div>
 
-        <div id="abas-adicionar" style="display: none;">
+        <div id="adicionar" class="aba">
             <div class="form-box">
                 <h2>Novo Carro</h2>
                 <div class="form-group">
@@ -96,7 +104,7 @@
                     <input type="text" id="imagem" placeholder="https://exemplo.com/imagem.jpg">
                 </div>
                 <div class="form-group">
-                    <button onclick="addCarro()">✅ Adicionar Carro</button>
+                    <button onclick="adicionarCarro()">✅ Adicionar Carro</button>
                 </div>
             </div>
         </div>
@@ -104,24 +112,31 @@
 </div>
 
 <script>
-function login() {
+let logado = false;
+let carros = [];
+
+function fazerLogin() {
     const user = document.getElementById('user').value;
     const pass = document.getElementById('pass').value;
     const msg = document.getElementById('loginMsg');
     
+    console.log('Tentando login com:', user, pass);
+    
     if (user === 'admin' && pass === '1234') {
-        localStorage.setItem('logado', 'sim');
+        logado = true;
+        console.log('Login bem-sucedido!');
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('adminContainer').style.display = 'block';
         carregarCarros();
     } else {
-        msg.textContent = '❌ Dados incorretos!';
+        msg.textContent = '❌ Usuário ou senha incorretos!';
+        console.log('Login falhou!');
     }
 }
 
-function logout() {
+function fazerLogout() {
     if (confirm('Deseja sair?')) {
-        localStorage.removeItem('logado');
+        logado = false;
         document.getElementById('loginContainer').style.display = 'flex';
         document.getElementById('adminContainer').style.display = 'none';
         document.getElementById('user').value = 'admin';
@@ -130,13 +145,12 @@ function logout() {
     }
 }
 
-function mostrarAbas(aba) {
-    document.getElementById('abas-carros').style.display = 'none';
-    document.getElementById('abas-adicionar').style.display = 'none';
-    document.getElementById('abas-' + aba).style.display = 'block';
+function mudarAba(aba) {
+    document.querySelectorAll('.aba').forEach(e => e.classList.remove('ativo'));
+    document.getElementById(aba).classList.add('ativo');
 }
 
-function addCarro() {
+function adicionarCarro() {
     const marca = document.getElementById('marca').value;
     const modelo = document.getElementById('modelo').value;
     const ano = document.getElementById('ano').value;
@@ -144,15 +158,19 @@ function addCarro() {
     const imagem = document.getElementById('imagem').value;
     
     if (!marca || !modelo || !ano || !preco) {
-        alert('Preencha todos os campos!');
+        alert('⚠️ Preencha todos os campos obrigatórios!');
         return;
     }
     
-    const carros = JSON.parse(localStorage.getItem('carros')) || [];
-    carros.push({ marca, modelo, ano, preco, imagem: imagem || 'https://via.placeholder.com/300x250' });
-    localStorage.setItem('carros', JSON.stringify(carros));
+    carros.push({
+        marca,
+        modelo,
+        ano,
+        preco,
+        imagem: imagem || 'https://via.placeholder.com/300x250'
+    });
     
-    alert('✅ Carro adicionado!');
+    alert('✅ Carro adicionado com sucesso!');
     document.getElementById('marca').value = '';
     document.getElementById('modelo').value = '';
     document.getElementById('ano').value = '';
@@ -162,17 +180,14 @@ function addCarro() {
     carregarCarros();
 }
 
-function deletarCarro(i) {
-    if (confirm('Deletar carro?')) {
-        const carros = JSON.parse(localStorage.getItem('carros')) || [];
-        carros.splice(i, 1);
-        localStorage.setItem('carros', JSON.stringify(carros));
+function deletarCarro(indice) {
+    if (confirm('Tem certeza que quer deletar este carro?')) {
+        carros.splice(indice, 1);
         carregarCarros();
     }
 }
 
 function carregarCarros() {
-    const carros = JSON.parse(localStorage.getItem('carros')) || [];
     const container = document.getElementById('carrosList');
     
     if (carros.length === 0) {
@@ -180,24 +195,16 @@ function carregarCarros() {
         return;
     }
     
-    container.innerHTML = carros.map((car, i) => `
+    container.innerHTML = carros.map((carro, i) => `
         <div class="carro-item">
             <div class="carro-info">
-                <p><strong>${car.marca} ${car.modelo}</strong></p>
-                <p>📅 ${car.ano} | 💰 R$ ${parseFloat(car.preco).toLocaleString('pt-BR')}</p>
+                <p><strong>🏎️ ${carro.marca} ${carro.modelo}</strong></p>
+                <p>📅 Ano: ${carro.ano} | 💰 R$ ${parseFloat(carro.preco).toLocaleString('pt-BR')}</p>
             </div>
             <button class="btn-delete" onclick="deletarCarro(${i})">🗑️ Deletar</button>
         </div>
     `).join('');
 }
-
-window.addEventListener('load', function() {
-    if (localStorage.getItem('logado') === 'sim') {
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('adminContainer').style.display = 'block';
-        carregarCarros();
-    }
-});
 </script>
 
 </body>
