@@ -18,7 +18,10 @@
         .login-box button:hover { background: white; }
         .msg { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; min-height: 20px; }
         .msg.error { color: #ff6b6b; }
-        .credenciais { text-align: center; margin-top: 1rem; color: #999; font-size: 0.8rem; line-height: 1.6; }
+        .msg.success { color: #4caf50; }
+        .link-esqueci { text-align: center; margin-top: 1rem; }
+        .link-esqueci a { color: #d4af37; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
+        .link-esqueci a:hover { text-decoration: underline; }
 
         .admin-screen { display: none; }
         .admin-header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
@@ -54,10 +57,19 @@
         .btn-delete { background: #ff6b6b; color: #fff; padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
         .btn-delete:hover { background: #ff5252; }
         .empty { text-align: center; color: #999; padding: 2rem; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; max-width: 400px; width: 90%; }
+        .modal-content h2 { color: #d4af37; margin-bottom: 1.5rem; }
+        .modal-close { text-align: right; margin-bottom: 1rem; }
+        .modal-close button { background: #ff6b6b; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .modal-close button:hover { background: #ff5252; }
     </style>
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <h1>🔐 Login</h1>
@@ -65,18 +77,43 @@
         <input type="text" id="user" placeholder="Usuário" autocomplete="off">
         <input type="password" id="pass" placeholder="Senha" autocomplete="off">
         <button onclick="fazerLogin()">Entrar</button>
-        <div class="credenciais">
-            <strong>Credenciais padrão:</strong><br>
-            Usuário: <code>admin</code><br>
-            Senha: <code>1234</code>
+        <div class="link-esqueci">
+            <a onclick="abrirModalRecuperacao()">Esqueci minha senha</a>
         </div>
     </div>
 </div>
 
+<!-- MODAL RECUPERAÇÃO DE SENHA -->
+<div class="modal" id="modalRecuperacao">
+    <div class="modal-content">
+        <div class="modal-close">
+            <button onclick="fecharModalRecuperacao()">✕</button>
+        </div>
+        <h2>🔑 Recuperar Senha</h2>
+        <div id="recuperacaoMsg" class="msg"></div>
+        <div class="form-group">
+            <label>Pergunta de Segurança:</label>
+            <p style="color: #ddd; margin-top: 0.5rem;">Qual é o nome da sua empresa?</p>
+            <input type="text" id="resposta" placeholder="Digite a resposta" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Nova Senha</label>
+            <input type="password" id="novaSenha" placeholder="Digite a nova senha" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button onclick="recuperarSenha()">✅ Atualizar Senha</button>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN SCREEN -->
 <div class="admin-screen" id="adminScreen">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
-        <button class="logout" onclick="fazerLogout()">Sair</button>
+        <div>
+            <button onclick="abrirModalAlterarSenha()" style="background: #4a90e2; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; margin-right: 0.5rem;">🔐 Alterar Senha</button>
+            <button class="logout" onclick="fazerLogout()">Sair</button>
+        </div>
     </header>
 
     <div class="admin-content">
@@ -123,9 +160,55 @@
     </div>
 </div>
 
+<!-- MODAL ALTERAR SENHA (quando logado) -->
+<div class="modal" id="modalAlterarSenha">
+    <div class="modal-content">
+        <div class="modal-close">
+            <button onclick="fecharModalAlterarSenha()">✕</button>
+        </div>
+        <h2>🔐 Alterar Senha</h2>
+        <div id="alterarMsg" class="msg"></div>
+        <div class="form-group">
+            <label>Senha Atual</label>
+            <input type="password" id="senhaAtual" placeholder="Digite sua senha atual" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Nova Senha</label>
+            <input type="password" id="novaSenhaAdmin" placeholder="Digite a nova senha" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Confirmar Nova Senha</label>
+            <input type="password" id="confirmarSenha" placeholder="Confirme a nova senha" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <button onclick="alterarSenhaAdmin()">✅ Atualizar Senha</button>
+        </div>
+    </div>
+</div>
+
 <script>
-const USUARIO = 'admin';
-const SENHA = '1234';
+// Dados padrão
+let USUARIO = 'admin';
+let SENHA = '1234';
+let RESPOSTA_SEGURANCA = 'dominus';
+
+// Carrega dados do localStorage se existirem
+function carregarConfiguracao() {
+    const config = JSON.parse(localStorage.getItem('dominusConfig')) || {};
+    if (config.usuario) USUARIO = config.usuario;
+    if (config.senha) SENHA = config.senha;
+    if (config.resposta) RESPOSTA_SEGURANCA = config.resposta;
+}
+
+function salvarConfiguracao() {
+    localStorage.setItem('dominusConfig', JSON.stringify({
+        usuario: USUARIO,
+        senha: SENHA,
+        resposta: RESPOSTA_SEGURANCA
+    }));
+}
+
+carregarConfiguracao();
 
 function fazerLogin() {
     const user = document.getElementById('user').value;
@@ -203,4 +286,45 @@ function deletarCarro(index) {
     }
 }
 
-function carre
+function carregarCarros() {
+    const carros = JSON.parse(localStorage.getItem('carros')) || [];
+    const container = document.getElementById('carrosList');
+
+    if (carros.length === 0) {
+        container.innerHTML = '<div class="empty">Nenhum carro cadastrado</div>';
+        return;
+    }
+
+    container.innerHTML = carros.map((car, index) => `
+        <div class="carro-item">
+            <div class="carro-info">
+                <p><strong>${car.marca} ${car.modelo}</strong></p>
+                <p>📅 Ano: ${car.ano}</p>
+                <p>💰 Preço: R$ ${parseFloat(car.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+            </div>
+            <div class="carro-actions">
+                <button class="btn-delete" onclick="deletarCarro(${index})">🗑️ Deletar</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// MODAL RECUPERAÇÃO DE SENHA
+function abrirModalRecuperacao() {
+    document.getElementById('modalRecuperacao').classList.add('active');
+}
+
+function fecharModalRecuperacao() {
+    document.getElementById('modalRecuperacao').classList.remove('active');
+    document.getElementById('resposta').value = '';
+    document.getElementById('novaSenha').value = '';
+    document.getElementById('recuperacaoMsg').textContent = '';
+}
+
+function recuperarSenha() {
+    const resposta = document.getElementById('resposta').value.trim().toLowerCase();
+    const novaSenha = document.getElementById('novaSenha').value.trim();
+    const msg = document.getElementById('recuperacaoMsg');
+
+    if (!resposta || !novaSenha) {
+        msg.textContent = '❌ Preencha todos os
