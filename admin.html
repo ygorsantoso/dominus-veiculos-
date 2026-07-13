@@ -26,6 +26,9 @@
         .admin-screen { display: none; }
         .admin-header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
         .admin-header h1 { color: #d4af37; }
+        .header-buttons { display: flex; gap: 0.5rem; }
+        .btn-alterar { background: #4a90e2; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .btn-alterar:hover { background: #357abd; }
         .logout { background: #ff6b6b; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
         .logout:hover { background: #ff5252; }
 
@@ -53,12 +56,11 @@
         .carro-info { flex: 1; min-width: 200px; }
         .carro-info p { margin: 0.3rem 0; color: #ddd; }
         .carro-info strong { color: #d4af37; }
-        .carro-actions { display: flex; gap: 0.5rem; }
         .btn-delete { background: #ff6b6b; color: #fff; padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
         .btn-delete:hover { background: #ff5252; }
         .empty { text-align: center; color: #999; padding: 2rem; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
         .modal.active { display: flex; }
         .modal-content { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; max-width: 400px; width: 90%; }
         .modal-content h2 { color: #d4af37; margin-bottom: 1.5rem; }
@@ -93,7 +95,7 @@
         <div id="recuperacaoMsg" class="msg"></div>
         <div class="form-group">
             <label>Pergunta de Segurança:</label>
-            <p style="color: #ddd; margin-top: 0.5rem;">Qual é o nome da sua empresa?</p>
+            <p style="color: #ddd; margin-top: 0.5rem; font-size: 0.9rem;">Qual é o nome da sua empresa?</p>
             <input type="text" id="resposta" placeholder="Digite a resposta" autocomplete="off">
         </div>
         <div class="form-group">
@@ -110,8 +112,8 @@
 <div class="admin-screen" id="adminScreen">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
-        <div>
-            <button onclick="abrirModalAlterarSenha()" style="background: #4a90e2; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; margin-right: 0.5rem;">🔐 Alterar Senha</button>
+        <div class="header-buttons">
+            <button class="btn-alterar" onclick="abrirModalAlterarSenha()">🔐 Alterar Senha</button>
             <button class="logout" onclick="fazerLogout()">Sair</button>
         </div>
     </header>
@@ -210,15 +212,32 @@ function salvarConfiguracao() {
 
 carregarConfiguracao();
 
+// Verifica se já está logado ao carregar a página
+window.addEventListener('load', function() {
+    if (localStorage.getItem('adminLogado') === 'sim') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminScreen').style.display = 'block';
+        carregarCarros();
+    }
+});
+
 function fazerLogin() {
-    const user = document.getElementById('user').value;
-    const pass = document.getElementById('pass').value;
+    const user = document.getElementById('user').value.trim();
+    const pass = document.getElementById('pass').value.trim();
     const msg = document.getElementById('loginMsg');
+
+    if (!user || !pass) {
+        msg.textContent = '❌ Preencha usuário e senha!';
+        msg.className = 'msg error';
+        return;
+    }
 
     if (user === USUARIO && pass === SENHA) {
         localStorage.setItem('adminLogado', 'sim');
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminScreen').style.display = 'block';
+        document.getElementById('user').value = '';
+        document.getElementById('pass').value = '';
         carregarCarros();
     } else {
         msg.textContent = '❌ Usuário ou senha incorretos!';
@@ -302,29 +321,11 @@ function carregarCarros() {
                 <p>📅 Ano: ${car.ano}</p>
                 <p>💰 Preço: R$ ${parseFloat(car.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
             </div>
-            <div class="carro-actions">
+            <div>
                 <button class="btn-delete" onclick="deletarCarro(${index})">🗑️ Deletar</button>
             </div>
         </div>
     `).join('');
 }
 
-// MODAL RECUPERAÇÃO DE SENHA
-function abrirModalRecuperacao() {
-    document.getElementById('modalRecuperacao').classList.add('active');
-}
-
-function fecharModalRecuperacao() {
-    document.getElementById('modalRecuperacao').classList.remove('active');
-    document.getElementById('resposta').value = '';
-    document.getElementById('novaSenha').value = '';
-    document.getElementById('recuperacaoMsg').textContent = '';
-}
-
-function recuperarSenha() {
-    const resposta = document.getElementById('resposta').value.trim().toLowerCase();
-    const novaSenha = document.getElementById('novaSenha').value.trim();
-    const msg = document.getElementById('recuperacaoMsg');
-
-    if (!resposta || !novaSenha) {
-        msg.textContent = '❌ Preencha todos os
+// MODAL RECUPERAÇÃO DE
