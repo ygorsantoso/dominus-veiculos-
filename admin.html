@@ -7,42 +7,29 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background: #0a0a0a; color: #fff; }
-        
         .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .login-box { background: #1a1a1a; border: 2px solid #d4af37; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; }
         .login-box h1 { color: #d4af37; text-align: center; margin-bottom: 30px; }
-        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; font-size: 16px; }
-        .login-box button { width: 100%; padding: 12px; background: #d4af37; color: #0a0a0a; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 16px; margin-bottom: 10px; }
+        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; }
+        .login-box button { width: 100%; padding: 12px; background: #d4af37; color: #0a0a0a; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; margin-bottom: 10px; }
         .login-box button:hover { background: #fff; }
-        .msg { text-align: center; margin-bottom: 15px; color: #ff6b6b; font-weight: bold; }
+        .msg { color: #ff6b6b; text-align: center; margin-bottom: 15px; }
         .link { text-align: center; color: #d4af37; cursor: pointer; text-decoration: underline; }
-        
         .admin-container { display: none; }
-        .admin-header { background: #1a1a1a; padding: 20px; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header { background: #1a1a1a; padding: 20px; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; }
         .admin-header h1 { color: #d4af37; }
-        .logout-btn { background: #ff6b6b; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        .logout-btn:hover { background: #ff5252; }
-        
+        .logout-btn { background: #ff6b6b; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; }
         .admin-content { max-width: 1200px; margin: 20px auto; padding: 20px; }
         .tabs { margin-bottom: 20px; }
-        .tabs button { padding: 12px 20px; background: #d4af37; color: #0a0a0a; border: none; margin-right: 10px; cursor: pointer; font-weight: bold; border-radius: 4px; font-size: 16px; }
-        .tabs button:hover { background: #fff; }
-        
-        .form-box { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        .form-box h2 { color: #d4af37; margin-bottom: 15px; }
+        .tabs button { padding: 12px 20px; background: #d4af37; border: none; margin-right: 10px; cursor: pointer; font-weight: bold; }
+        .form-box, .carros-list { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .form-box h2, .carros-list h2 { color: #d4af37; margin-bottom: 15px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; color: #d4af37; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; font-size: 16px; }
-        .form-group button { width: 100%; padding: 10px; background: #d4af37; color: #0a0a0a; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; font-size: 16px; }
-        .form-group button:hover { background: #fff; }
-        
-        .carros-list { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; }
-        .carros-list h2 { color: #d4af37; margin-bottom: 15px; }
+        .form-group label { color: #d4af37; display: block; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 10px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; }
+        .form-group button { width: 100%; padding: 10px; background: #d4af37; border: none; cursor: pointer; font-weight: bold; }
         .carro-item { background: #0a0a0a; padding: 15px; margin-bottom: 10px; border-left: 4px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
-        .carro-info p { margin: 5px 0; color: #ddd; }
-        .carro-info strong { color: #d4af37; }
-        .btn-delete { background: #ff6b6b; color: #fff; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        .btn-delete:hover { background: #ff5252; }
+        .btn-delete { background: #ff6b6b; color: #fff; padding: 8px 15px; border: none; cursor: pointer; }
         .empty { text-align: center; color: #999; padding: 30px; }
         .aba { display: none; }
         .aba.ativo { display: block; }
@@ -56,154 +43,94 @@
         <div id="loginMsg" class="msg"></div>
         <input type="text" id="user" placeholder="Usuário" value="admin">
         <input type="password" id="pass" placeholder="Senha" value="1234">
-        <button onclick="fazerLogin()">Entrar</button>
-        <div class="link" onclick="alert('Contate o administrador: admin@dominus.com')">Esqueci minha senha</div>
+        <button type="button" onclick="login()">Entrar</button>
+        <div class="link" onclick="alert('Entre em contato: admin@dominus.com')">Esqueci minha senha</div>
     </div>
 </div>
 
 <div class="admin-container" id="adminContainer">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
-        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
+        <button class="logout-btn" type="button" onclick="logout()">Sair</button>
     </header>
-
     <div class="admin-content">
         <div class="tabs">
-            <button onclick="mudarAba('carros')">📋 Meus Carros</button>
-            <button onclick="mudarAba('adicionar')">➕ Adicionar Carro</button>
+            <button type="button" onclick="aba('carros')">📋 Meus Carros</button>
+            <button type="button" onclick="aba('add')">➕ Adicionar</button>
         </div>
-
         <div id="carros" class="aba ativo">
             <div class="carros-list">
                 <h2>Meus Carros</h2>
-                <div id="carrosList" class="empty">Nenhum carro cadastrado</div>
+                <div id="lista" class="empty">Nenhum carro</div>
             </div>
         </div>
-
-        <div id="adicionar" class="aba">
+        <div id="add" class="aba">
             <div class="form-box">
                 <h2>Novo Carro</h2>
-                <div class="form-group">
-                    <label>Marca</label>
-                    <input type="text" id="marca" placeholder="Ex: Toyota">
-                </div>
-                <div class="form-group">
-                    <label>Modelo</label>
-                    <input type="text" id="modelo" placeholder="Ex: Corolla">
-                </div>
-                <div class="form-group">
-                    <label>Ano</label>
-                    <input type="number" id="ano" placeholder="Ex: 2024">
-                </div>
-                <div class="form-group">
-                    <label>Preço (R$)</label>
-                    <input type="number" id="preco" placeholder="Ex: 150000">
-                </div>
-                <div class="form-group">
-                    <label>URL da Imagem</label>
-                    <input type="text" id="imagem" placeholder="https://exemplo.com/imagem.jpg">
-                </div>
-                <div class="form-group">
-                    <button onclick="adicionarCarro()">✅ Adicionar Carro</button>
-                </div>
+                <div class="form-group"><label>Marca</label><input type="text" id="marca"></div>
+                <div class="form-group"><label>Modelo</label><input type="text" id="modelo"></div>
+                <div class="form-group"><label>Ano</label><input type="number" id="ano"></div>
+                <div class="form-group"><label>Preço</label><input type="number" id="preco"></div>
+                <div class="form-group"><label>Imagem URL</label><input type="text" id="imagem"></div>
+                <div class="form-group"><button type="button" onclick="addcar()">✅ Adicionar</button></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-let logado = false;
-let carros = [];
+let ok = false;
+let cars = [];
 
-function fazerLogin() {
-    const user = document.getElementById('user').value;
-    const pass = document.getElementById('pass').value;
-    const msg = document.getElementById('loginMsg');
-    
-    console.log('Tentando login com:', user, pass);
-    
-    if (user === 'admin' && pass === '1234') {
-        logado = true;
-        console.log('Login bem-sucedido!');
+function login() {
+    if (document.getElementById('user').value === 'admin' && document.getElementById('pass').value === '1234') {
+        ok = true;
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('adminContainer').style.display = 'block';
-        carregarCarros();
     } else {
-        msg.textContent = '❌ Usuário ou senha incorretos!';
-        console.log('Login falhou!');
+        document.getElementById('loginMsg').textContent = '❌ Dados incorretos';
     }
 }
 
-function fazerLogout() {
-    if (confirm('Deseja sair?')) {
-        logado = false;
+function logout() {
+    if (confirm('Sair?')) {
+        ok = false;
         document.getElementById('loginContainer').style.display = 'flex';
         document.getElementById('adminContainer').style.display = 'none';
-        document.getElementById('user').value = 'admin';
-        document.getElementById('pass').value = '1234';
-        document.getElementById('loginMsg').textContent = '';
     }
 }
 
-function mudarAba(aba) {
-    document.querySelectorAll('.aba').forEach(e => e.classList.remove('ativo'));
-    document.getElementById(aba).classList.add('ativo');
+function aba(n) {
+    document.querySelectorAll('.aba').forEach(x => x.classList.remove('ativo'));
+    document.getElementById(n).classList.add('ativo');
 }
 
-function adicionarCarro() {
-    const marca = document.getElementById('marca').value;
-    const modelo = document.getElementById('modelo').value;
-    const ano = document.getElementById('ano').value;
-    const preco = document.getElementById('preco').value;
-    const imagem = document.getElementById('imagem').value;
-    
-    if (!marca || !modelo || !ano || !preco) {
-        alert('⚠️ Preencha todos os campos obrigatórios!');
-        return;
-    }
-    
-    carros.push({
-        marca,
-        modelo,
-        ano,
-        preco,
-        imagem: imagem || 'https://via.placeholder.com/300x250'
-    });
-    
-    alert('✅ Carro adicionado com sucesso!');
+function addcar() {
+    const m = document.getElementById('marca').value;
+    const mo = document.getElementById('modelo').value;
+    const a = document.getElementById('ano').value;
+    const p = document.getElementById('preco').value;
+    if (!m || !mo || !a || !p) { alert('Preencha tudo'); return; }
+    cars.push({marca: m, modelo: mo, ano: a, preco: p});
     document.getElementById('marca').value = '';
     document.getElementById('modelo').value = '';
     document.getElementById('ano').value = '';
     document.getElementById('preco').value = '';
-    document.getElementById('imagem').value = '';
-    
-    carregarCarros();
+    listar();
 }
 
-function deletarCarro(indice) {
-    if (confirm('Tem certeza que quer deletar este carro?')) {
-        carros.splice(indice, 1);
-        carregarCarros();
-    }
+function deletar(i) {
+    cars.splice(i, 1);
+    listar();
 }
 
-function carregarCarros() {
-    const container = document.getElementById('carrosList');
-    
-    if (carros.length === 0) {
-        container.innerHTML = '<div class="empty">Nenhum carro cadastrado</div>';
+function listar() {
+    const l = document.getElementById('lista');
+    if (cars.length === 0) {
+        l.innerHTML = '<div class="empty">Nenhum carro</div>';
         return;
     }
-    
-    container.innerHTML = carros.map((carro, i) => `
-        <div class="carro-item">
-            <div class="carro-info">
-                <p><strong>🏎️ ${carro.marca} ${carro.modelo}</strong></p>
-                <p>📅 Ano: ${carro.ano} | 💰 R$ ${parseFloat(carro.preco).toLocaleString('pt-BR')}</p>
-            </div>
-            <button class="btn-delete" onclick="deletarCarro(${i})">🗑️ Deletar</button>
-        </div>
-    `).join('');
+    l.innerHTML = cars.map((c, i) => `<div class="carro-item"><div><p><strong>${c.marca} ${c.modelo}</strong></p><p>📅 ${c.ano} | 💰 R$ ${c.preco}</p></div><button class="btn-delete" onclick="deletar(${i})">🗑️</button></div>`).join('');
 }
 </script>
 
