@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Admin - DOMINUS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMINUS - Carros Premium</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0a0a0a; color: #fff; }
+        header { background: #1a1a1a; padding: 20px; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { color: #d4af37; }
+        header a { color: #d4af37; text-decoration: none; padding: 10px 20px; border: 1px solid #d4af37; cursor: pointer; }
+        header a:hover { background: #d4af37; color: #0a0a0a; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .carros { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; }
+        .carro-card h3 { color: #d4af37; margin-bottom: 10px; }
+        .carro-card p { margin: 5px 0; }
+        footer { background: #1a1a1a; text-align: center; padding: 20px; border-top: 2px solid #d4af37; margin-top: 40px; }
+    </style>
 </head>
 <body>
-    <script>
-        window.location.href = 'admin.html';
-    </script>
+
+<header>
+    <h1>🏎️ DOMINUS</h1>
+    <a href="admin.html">🔐 Admin</a>
+</header>
+
+<div class="container">
+    <h2 style="color: #d4af37; margin-bottom: 20px;">Bem-vindo à DOMINUS</h2>
+    <p style="margin-bottom: 30px;">Conheça nossa coleção de carros premium.</p>
+    <div class="carros" id="lista"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 DOMINUS - Todos os direitos reservados</p>
+</footer>
+
+<script>
+// Dados padrão se não houver no admin
+const carros = [
+    { marca: 'Ferrari', modelo: '488', ano: 2023, preco: '500000' },
+    { marca: 'Lamborghini', modelo: 'Aventador', ano: 2022, preco: '450000' },
+    { marca: 'Porsche', modelo: '911', ano: 2023, preco: '350000' }
+];
+
+function listar() {
+    const l = document.getElementById('lista');
+    l.innerHTML = carros.map(c => `
+        <div class="carro-card">
+            <h3>${c.marca} ${c.modelo}</h3>
+            <p>📅 Ano: ${c.ano}</p>
+            <p>💰 Preço: R$ ${c.preco}</p>
+        </div>
+    `).join('');
+}
+
+listar();
+</script>
+
 </body>
 </html>
