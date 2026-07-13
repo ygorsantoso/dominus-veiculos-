@@ -9,7 +9,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: #fff; }
 
-        /* LOGIN */
         .login-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0a0a0a, #1a1a1a); }
         .login-box { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 3rem; width: 100%; max-width: 400px; }
         .login-box h1 { color: #d4af37; text-align: center; margin-bottom: 2rem; font-size: 2rem; }
@@ -17,12 +16,10 @@
         .login-box input:focus { outline: none; border-color: white; }
         .login-box button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; font-size: 1rem; cursor: pointer; }
         .login-box button:hover { background: white; }
-        .msg { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; }
+        .msg { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; min-height: 20px; }
         .msg.error { color: #ff6b6b; }
-        .msg.success { color: #4caf50; }
-        .credenciais { text-align: center; margin-top: 1rem; color: #999; font-size: 0.8rem; }
+        .credenciais { text-align: center; margin-top: 1rem; color: #999; font-size: 0.8rem; line-height: 1.6; }
 
-        /* ADMIN PANEL */
         .admin-screen { display: none; }
         .admin-header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
         .admin-header h1 { color: #d4af37; }
@@ -31,76 +28,63 @@
 
         .admin-content { max-width: 1200px; margin: 2rem auto; padding: 2rem; }
         .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #d4af37; }
-        .tab-btn { background: transparent; color: #999; border: none; padding: 1rem 2rem; cursor: pointer; font-weight: 600; border-bottom: 3px solid transparent; }
+        .tab-btn { background: transparent; color: #999; border: none; padding: 1rem 2rem; cursor: pointer; font-weight: 600; border-bottom: 3px solid transparent; font-size: 1rem; }
         .tab-btn.active { color: #d4af37; border-bottom-color: #d4af37; }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* FORMS */
         .form-box { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; }
         .form-box h2 { color: #d4af37; margin-bottom: 1.5rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; color: #d4af37; margin-bottom: 0.5rem; font-weight: 600; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-family: 'Poppins'; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-family: 'Poppins'; font-size: 1rem; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: white; }
         .form-group textarea { min-height: 100px; resize: vertical; }
-        .form-group button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+        .form-group button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 1rem; }
         .form-group button:hover { background: white; }
 
-        /* CARROS LIST */
         .carros-list { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; }
         .carros-list h2 { color: #d4af37; margin-bottom: 1.5rem; }
         .carro-item { background: #0a0a0a; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #d4af37; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .carro-info { flex: 1; }
+        .carro-info { flex: 1; min-width: 200px; }
         .carro-info p { margin: 0.3rem 0; color: #ddd; }
         .carro-info strong { color: #d4af37; }
         .carro-actions { display: flex; gap: 0.5rem; }
-        .btn-edit { background: #4a90e2; color: #fff; padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
-        .btn-edit:hover { background: #357abd; }
         .btn-delete { background: #ff6b6b; color: #fff; padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
         .btn-delete:hover { background: #ff5252; }
         .empty { text-align: center; color: #999; padding: 2rem; }
-
-        @media (max-width: 768px) {
-            .tabs { flex-direction: column; }
-            .carro-item { flex-direction: column; align-items: flex-start; }
-            .carro-actions { width: 100%; }
-        }
     </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <h1>🔐 Login</h1>
         <div id="loginMsg" class="msg"></div>
         <input type="text" id="user" placeholder="Usuário" autocomplete="off">
         <input type="password" id="pass" placeholder="Senha" autocomplete="off">
-        <button onclick="login()">Entrar</button>
+        <button onclick="fazerLogin()">Entrar</button>
         <div class="credenciais">
             <strong>Credenciais padrão:</strong><br>
-            Usuário: <strong>admin</strong><br>
-            Senha: <strong>1234</strong>
+            Usuário: <code>admin</code><br>
+            Senha: <code>1234</code>
         </div>
     </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div class="admin-screen" id="adminScreen">
     <header class="admin-header">
         <h1>🏎️ DOMINUS - Admin</h1>
-        <button class="logout" onclick="logout()">Sair</button>
+        <button class="logout" onclick="fazerLogout()">Sair</button>
     </header>
 
     <div class="admin-content">
         <div class="tabs">
-            <button class="tab-btn active" onclick="abrirTab('carros')">📋 Meus Carros</button>
-            <button class="tab-btn" onclick="abrirTab('adicionar')">➕ Adicionar Carro</button>
+            <button class="tab-btn active" onclick="abrirTab(event, 'carros')">📋 Meus Carros</button>
+            <button class="tab-btn" onclick="abrirTab(event, 'adicionar')">➕ Adicionar Carro</button>
         </div>
 
-        <!-- TAB 1: CARROS -->
         <div id="carros" class="tab-content active">
             <div class="carros-list">
                 <h2>Carros Cadastrados</h2>
@@ -108,7 +92,6 @@
             </div>
         </div>
 
-        <!-- TAB 2: ADICIONAR -->
         <div id="adicionar" class="tab-content">
             <div class="form-box">
                 <h2>Adicionar Novo Carro</h2>
@@ -130,7 +113,7 @@
                 </div>
                 <div class="form-group">
                     <label>URL da Imagem</label>
-                    <input type="text" id="imagem" placeholder="Ex: https://...">
+                    <input type="text" id="imagem" placeholder="https://exemplo.com/imagem.jpg">
                 </div>
                 <div class="form-group">
                     <button onclick="adicionarCarro()">✅ Adicionar Carro</button>
@@ -144,13 +127,13 @@
 const USUARIO = 'admin';
 const SENHA = '1234';
 
-function login() {
+function fazerLogin() {
     const user = document.getElementById('user').value;
     const pass = document.getElementById('pass').value;
     const msg = document.getElementById('loginMsg');
 
     if (user === USUARIO && pass === SENHA) {
-        localStorage.setItem('adminLogado', 'true');
+        localStorage.setItem('adminLogado', 'sim');
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminScreen').style.display = 'block';
         carregarCarros();
@@ -160,15 +143,19 @@ function login() {
     }
 }
 
-function logout() {
-    localStorage.removeItem('adminLogado');
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('adminScreen').style.display = 'none';
-    document.getElementById('user').value = '';
-    document.getElementById('pass').value = '';
+function fazerLogout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('adminLogado');
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('adminScreen').style.display = 'none';
+        document.getElementById('user').value = '';
+        document.getElementById('pass').value = '';
+        document.getElementById('loginMsg').textContent = '';
+    }
 }
 
-function abrirTab(tabName) {
+function abrirTab(event, tabName) {
+    event.preventDefault();
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(tabName).classList.add('active');
@@ -176,19 +163,25 @@ function abrirTab(tabName) {
 }
 
 function adicionarCarro() {
-    const marca = document.getElementById('marca').value;
-    const modelo = document.getElementById('modelo').value;
-    const ano = document.getElementById('ano').value;
-    const preco = document.getElementById('preco').value;
-    const imagem = document.getElementById('imagem').value;
+    const marca = document.getElementById('marca').value.trim();
+    const modelo = document.getElementById('modelo').value.trim();
+    const ano = document.getElementById('ano').value.trim();
+    const preco = document.getElementById('preco').value.trim();
+    const imagem = document.getElementById('imagem').value.trim();
 
     if (!marca || !modelo || !ano || !preco) {
-        alert('❌ Preencha todos os campos!');
+        alert('❌ Preencha todos os campos obrigatórios!');
         return;
     }
 
     const carros = JSON.parse(localStorage.getItem('carros')) || [];
-    carros.push({ marca, modelo, ano, preco, imagem: imagem || 'https://via.placeholder.com/300x250' });
+    carros.push({ 
+        marca, 
+        modelo, 
+        ano, 
+        preco, 
+        imagem: imagem || 'https://via.placeholder.com/300x250?text=Sem+imagem'
+    });
     localStorage.setItem('carros', JSON.stringify(carros));
 
     alert('✅ Carro adicionado com sucesso!');
@@ -202,8 +195,12 @@ function adicionarCarro() {
 }
 
 function deletarCarro(index) {
-    if (confirm('Tem certeza?')) {
+    if (confirm('Tem certeza que deseja deletar este carro?')) {
         const carros = JSON.parse(localStorage.getItem('carros')) || [];
         carros.splice(index, 1);
         localStorage.setItem('carros', JSON.stringify(carros));
-        car
+        carregarCarros();
+    }
+}
+
+function carre
