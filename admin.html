@@ -3,133 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOMINUS VEÍCULOS</title>
+    <title>Admin - DOMINUS VEÍCULOS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: #fff; }
-        
-        /* HEADER */
-        header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        header h1 { color: #d4af37; font-size: 1.8rem; }
-        nav { display: flex; gap: 2rem; }
-        nav a { color: #fff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
-        nav a:hover { color: #d4af37; }
-        .admin-link { background: #d4af37; color: #0a0a0a; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 700; }
-        .admin-link:hover { background: white; }
 
-        /* HERO */
-        .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #d4af37 100%); padding: 6rem 2rem; text-align: center; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-        .hero p { font-size: 1.3rem; color: #f0f0f0; margin-bottom: 2rem; }
-        .cta-btn { background: #d4af37; color: #0a0a0a; padding: 1rem 2.5rem; font-size: 1.1rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; transition: all 0.3s; }
-        .cta-btn:hover { background: white; transform: scale(1.05); }
+        /* LOGIN SCREEN */
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); }
+        .login-box { background: #1a1a1a; padding: 3rem; border: 2px solid #d4af37; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(212,175,55,0.2); }
+        .login-box h1 { text-align: center; color: #d4af37; margin-bottom: 2rem; font-size: 2rem; }
+        .login-box input { width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-size: 1rem; }
+        .login-box input:focus { outline: none; border-color: #fff; }
+        .login-box button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
+        .login-box button:hover { background: white; }
+        .login-error { color: #ff6b6b; text-align: center; margin-bottom: 1rem; font-size: 0.9rem; display: none; }
 
-        /* ABOUT */
-        .about { max-width: 1200px; margin: 4rem auto; padding: 3rem 2rem; text-align: center; }
-        .about h2 { font-size: 2.5rem; color: #d4af37; margin-bottom: 1.5rem; }
-        .about p { font-size: 1.1rem; line-height: 1.6; color: #ddd; }
+        /* ADMIN PANEL */
+        .admin-container { display: none; min-height: 100vh; background: #0a0a0a; }
+        .admin-header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header h1 { color: #d4af37; font-size: 1.8rem; }
+        .logout-btn { background: #ff6b6b; color: #fff; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .logout-btn:hover { background: #ff5252; }
 
-        /* CARROS */
-        .carros-section { max-width: 1200px; margin: 4rem auto; padding: 2rem; }
-        .carros-section h2 { font-size: 2.5rem; color: #d4af37; text-align: center; margin-bottom: 3rem; }
-        .carros-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
-        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
-        .carro-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.3); }
-        .carro-img { width: 100%; height: 250px; object-fit: cover; }
-        .carro-info { padding: 1.5rem; }
-        .carro-title { font-size: 1.3rem; font-weight: 700; color: #d4af37; margin-bottom: 0.5rem; }
-        .carro-year { color: #999; font-size: 0.9rem; margin-bottom: 1rem; }
-        .carro-price { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
-        .carro-btn { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
-        .carro-btn:hover { background: white; }
-        .no-carros { text-align: center; color: #999; padding: 3rem; font-size: 1.1rem; }
+        .admin-content { max-width: 1200px; margin: 2rem auto; padding: 2rem; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #d4af37; }
+        .tab-btn { background: transparent; color: #999; border: none; padding: 1rem 2rem; cursor: pointer; font-weight: 600; font-size: 1rem; transition: color 0.3s; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: #d4af37; border-bottom-color: #d4af37; }
+        .tab-btn:hover { color: #d4af37; }
 
-        /* FOOTER */
-        footer { background: #1a1a1a; padding: 2rem; text-align: center; border-top: 2px solid #d4af37; color: #999; margin-top: 4rem; }
-        footer p { margin: 0.5rem 0; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        /* RESPONSIVO */
+        /* FORM */
+        .form-section { background: #1a1a1a; padding: 2rem; border: 2px solid #d4af37; border-radius: 8px; }
+        .form-section h2 { color: #d4af37; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; color: #d4af37; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #0a0a0a; border: 1px solid #d4af37; border-radius: 4px; color: #fff; font-size: 1rem; font-family: 'Poppins', sans-serif; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: white; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-group button { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; transition: background 0.3s; }
+        .form-group button:hover { background: white; }
+
+        /* CARROS LIST */
+        .carros-list { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; padding: 2rem; }
+        .carros-list h2 { color: #d4af37; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        .carro-item { background: #0a0a0a; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #d4af37; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .carro-info { flex: 1; min-width: 200px; }
+        .carro-info p { margin: 0.3rem 0; color: #ddd; }
+        .carro-info strong { color: #d4af37; }
+        .carro-actions { display: flex; gap: 0.5rem; }
+        .btn-edit, .btn-delete { padding: 0.6rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
+        .btn-edit { background: #4a90e2; color: #fff; }
+        .btn-edit:hover { background: #357abd; }
+        .btn-delete { background: #ff6b6b; color: #fff; }
+        .btn-delete:hover { background: #ff5252; }
+
+        .empty-message { text-align: center; color: #999; padding: 2rem; font-size: 1.1rem; }
+
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 1rem; }
-            nav { flex-direction: column; gap: 1rem; }
-            .hero h1 { font-size: 2rem; }
-            .carros-grid { grid-template-columns: 1fr; }
+            .admin-header { flex-direction: column; gap: 1rem; }
+            .tabs { flex-direction: column; }
+            .carro-item { flex-direction: column; align-items: flex-start; }
+            .carro-actions { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>🏎️ DOMINUS VEÍCULOS</h1>
-    <nav>
-        <a href="#sobre">Sobre</a>
-        <a href="#carros">Carros</a>
-        <a href="admin.html" class="admin-link">🔐 Login</a>
-    </nav>
-</header>
-
-<section class="hero">
-    <h1 id="heroTitle">DOMINUS VEÍCULOS</h1>
-    <p id="heroSubtitle">Os melhores carros com os melhores preços</p>
-    <button class="cta-btn" onclick="document.getElementById('carros').scrollIntoView({behavior: 'smooth'})">Ver Carros</button>
-</section>
-
-<section id="sobre" class="about">
-    <h2 id="aboutTitle">Sobre Nós</h2>
-    <p id="aboutText">Bem-vindo à DOMINUS VEÍCULOS! Somos especialistas em encontrar o carro perfeito para você.</p>
-</section>
-
-<section id="carros" class="carros-section">
-    <h2>Nossos Carros</h2>
-    <div class="carros-grid" id="carrosContainer">
-        <div class="no-carros">Carregando carros...</div>
+<!-- LOGIN SCREEN -->
+<div class="login-container" id="loginScreen">
+    <div class="login-box">
+        <h1>🔐 Login Admin</h1>
+        <div class="login-error" id="loginError"></div>
+        <input type="text" id="loginUser" placeholder="Usuário" autocomplete="off">
+        <input type="password" id="loginPassword" placeholder="Senha" autocomplete="off">
+        <button onclick="fazerLogin()">Entrar</button>
+        <p style="text-align: center; margin-top: 1rem; color: #999; font-size: 0.9rem;">Padrão: admin / 1234</p>
     </div>
-</section>
+</div>
 
-<footer>
-    <p>&copy; 2024 DOMINUS VEÍCULOS - Todos os direitos reservados</p>
-    <p>📧 contato@dominus.com | 📞 (11) 99999-9999</p>
-</footer>
+<!-- ADMIN PANEL -->
+<div class="admin-container" id="adminPanel">
+    <header class="admin-header">
+        <h1>🏎️ DOMINUS - Painel Admin</h1>
+        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
+    </header>
 
-<script>
-    // Carrega os dados da página (título, subtítulo, sobre)
-    function loadPageData() {
-        const data = JSON.parse(localStorage.getItem('pageData')) || {};
-        document.getElementById('heroTitle').textContent = data.heroTitle || 'DOMINUS VEÍCULOS';
-        document.getElementById('heroSubtitle').textContent = data.heroSubtitle || 'Os melhores carros com os melhores preços';
-        document.getElementById('aboutTitle').textContent = data.aboutTitle || 'Sobre Nós';
-        document.getElementById('aboutText').textContent = data.aboutText || 'Bem-vindo à DOMINUS VEÍCULOS!';
-    }
+    <div class="admin-content">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="abrirTab('gerenciar-carros')">Gerenciar Carros</button>
+            <button class="tab-btn" onclick="abrirTab('adicionar-carro')">Adicionar Carro</button>
+            <button class="tab-btn" onclick="abrirTab('editar-pagina')">Editar Página</button>
+        </div>
 
-    // Carrega e exibe os carros
-    function loadCarros() {
-        const carros = JSON.parse(localStorage.getItem('carros')) || [];
-        const container = document.getElementById('carrosContainer');
-
-        if (carros.length === 0) {
-            container.innerHTML = '<div class="no-carros">Nenhum carro disponível no momento</div>';
-            return;
-        }
-
-        container.innerHTML = carros.map(car => `
-            <div class="carro-card">
-                <img src="${car.imagem}" alt="${car.marca} ${car.modelo}" class="carro-img" onerror="this.src='https://via.placeholder.com/300x250?text=${car.marca}+${car.modelo}'">
-                <div class="carro-info">
-                    <div class="carro-title">${car.marca} ${car.modelo}</div>
-                    <div class="carro-year">Ano: ${car.ano}</div>
-                    <div class="carro-price">R$ ${parseFloat(car.preco).toLocaleString('pt-BR')}</div>
-                    <button class="carro-btn" onclick="alert('Entre em contato: contato@dominus.com')">Informações</button>
+        <!-- TAB 1: GERENCIAR CARROS -->
+        <div id="gerenciar-carros" class="tab-content active">
+            <div class="carros-list">
+                <h2>Carros Cadastrados</h2>
+                <div id="carrosListContainer">
+                    <div class="empty-message">Nenhum carro cadastrado ainda</div>
                 </div>
             </div>
-        `).join('');
-    }
+        </div>
 
-    // Atualiza os carros a cada 2 segundos (caso alguém adicione no admin)
-    loadPageData();
-    loadCarros();
-    setInterval(loadCarros, 2000);
-</script>
-
-</body>
-</html>
+        <!-- TAB 2: ADICIONAR CARRO -->
+        <div id="adicionar-carro" class="tab-content">
+            <div
