@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMINUS VEÍCULOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #0a0a0a; color: #fff; }
+        
+        /* HEADER */
+        header { background: #1a1a1a; padding: 1.5rem 2rem; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        header h1 { color: #d4af37; font-size: 1.8rem; }
+        nav { display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: #d4af37; }
+        .admin-link { background: #d4af37; color: #0a0a0a; padding: 0.8rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 700; }
+        .admin-link:hover { background: white; }
+
+        /* HERO */
+        .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #d4af37 100%); padding: 6rem 2rem; text-align: center; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+        .hero p { font-size: 1.3rem; color: #f0f0f0; margin-bottom: 2rem; }
+        .cta-btn { background: #d4af37; color: #0a0a0a; padding: 1rem 2.5rem; font-size: 1.1rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; transition: all 0.3s; }
+        .cta-btn:hover { background: white; transform: scale(1.05); }
+
+        /* ABOUT */
+        .about { max-width: 1200px; margin: 4rem auto; padding: 3rem 2rem; text-align: center; }
+        .about h2 { font-size: 2.5rem; color: #d4af37; margin-bottom: 1.5rem; }
+        .about p { font-size: 1.1rem; line-height: 1.6; color: #ddd; }
+
+        /* CARROS */
+        .carros-section { max-width: 1200px; margin: 4rem auto; padding: 2rem; }
+        .carros-section h2 { font-size: 2.5rem; color: #d4af37; text-align: center; margin-bottom: 3rem; }
+        .carros-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .carro-card { background: #1a1a1a; border: 2px solid #d4af37; border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .carro-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(212,175,55,0.3); }
+        .carro-img { width: 100%; height: 250px; object-fit: cover; }
+        .carro-info { padding: 1.5rem; }
+        .carro-title { font-size: 1.3rem; font-weight: 700; color: #d4af37; margin-bottom: 0.5rem; }
+        .carro-year { color: #999; font-size: 0.9rem; margin-bottom: 1rem; }
+        .carro-price { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 1rem; }
+        .carro-btn { width: 100%; padding: 0.8rem; background: #d4af37; color: #0a0a0a; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; }
+        .carro-btn:hover { background: white; }
+        .no-carros { text-align: center; color: #999; padding: 3rem; font-size: 1.1rem; }
+
+        /* FOOTER */
+        footer { background: #1a1a1a; padding: 2rem; text-align: center; border-top: 2px solid #d4af37; color: #999; margin-top: 4rem; }
+        footer p { margin: 0.5rem 0; }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 1rem; }
+            nav { flex-direction: column; gap: 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .carros-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏎️ DOMINUS VEÍCULOS</h1>
+    <nav>
+        <a href="#sobre">Sobre</a>
+        <a href="#carros">Carros</a>
+        <a href="admin.html" class="admin-link">🔐 Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1 id="heroTitle">DOMINUS VEÍCULOS</h1>
+    <p id="heroSubtitle">Os melhores carros com os melhores preços</p>
+    <button class="cta-btn" onclick="document.getElementById('carros').scrollIntoView({behavior: 'smooth'})">Ver Carros</button>
+</section>
+
+<section id="sobre" class="about">
+    <h2 id="aboutTitle">Sobre Nós</h2>
+    <p id="aboutText">Bem-vindo à DOMINUS VEÍCULOS! Somos especialistas em encontrar o carro perfeito para você.</p>
+</section>
+
+<section id="carros" class="carros-section">
+    <h2>Nossos Carros</h2>
+    <div class="carros-grid" id="carrosContainer">
+        <div class="no-carros">Carregando carros...</div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 DOMINUS VEÍCULOS - Todos os direitos reservados</p>
+    <p>📧 contato@dominus.com | 📞 (11) 99999-9999</p>
+</footer>
+
+<script>
+    // Carrega os dados da página (título, subtítulo, sobre)
+    function loadPageData() {
+        const data = JSON.parse(localStorage.getItem('pageData')) || {};
+        document.getElementById('heroTitle').textContent = data.heroTitle || 'DOMINUS VEÍCULOS';
+        document.getElementById('heroSubtitle').textContent = data.heroSubtitle || 'Os melhores carros com os melhores preços';
+        document.getElementById('aboutTitle').textContent = data.aboutTitle || 'Sobre Nós';
+        document.getElementById('aboutText').textContent = data.aboutText || 'Bem-vindo à DOMINUS VEÍCULOS!';
+    }
+
+    // Carrega e exibe os carros
+    function loadCarros() {
+        const carros = JSON.parse(localStorage.getItem('carros')) || [];
+        const container = document.getElementById('carrosContainer');
+
+        if (carros.length === 0) {
+            container.innerHTML = '<div class="no-carros">Nenhum carro disponível no momento</div>';
+            return;
+        }
+
+        container.innerHTML = carros.map(car => `
+            <div class="carro-card">
+                <img src="${car.imagem}" alt="${car.marca} ${car.modelo}" class="carro-img" onerror="this.src='https://via.placeholder.com/300x250?text=${car.marca}+${car.modelo}'">
+                <div class="carro-info">
+                    <div class="carro-title">${car.marca} ${car.modelo}</div>
+                    <div class="carro-year">Ano: ${car.ano}</div>
+                    <div class="carro-price">R$ ${parseFloat(car.preco).toLocaleString('pt-BR')}</div>
+                    <button class="carro-btn" onclick="alert('Entre em contato: contato@dominus.com')">Informações</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Atualiza os carros a cada 2 segundos (caso alguém adicione no admin)
+    loadPageData();
+    loadCarros();
+    setInterval(loadCarros, 2000);
+</script>
+
+</body>
+</html>
