@@ -3,24 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - DOMINUS</title>
+    <title>Painel Administrativo - Gerenciar Carros</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #0a0a0a; color: #fff; }
-        .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .login-box { background: #1a1a1a; border: 2px solid #d4af37; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; }
-        .login-box h1 { color: #d4af37; text-align: center; margin-bottom: 30px; }
-        .login-box input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #d4af37; color: #fff; border-radius: 4px; }
-        .login-box button { width: 100%; padding: 12px; background: #d4af37; color: #0a0a0a; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; margin-bottom: 10px; }
-        .login-box button:hover { background: #fff; }
-        .msg { color: #ff6b6b; text-align: center; margin-bottom: 15px; }
-        .link { text-align: center; color: #d4af37; cursor: pointer; text-decoration: underline; }
-        .admin-container { display: none; }
-        .admin-header { background: #1a1a1a; padding: 20px; border-bottom: 2px solid #d4af37; display: flex; justify-content: space-between; }
-        .admin-header h1 { color: #d4af37; }
-        .logout-btn { background: #ff6b6b; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; }
-        .admin-content { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        .tabs { margin-bottom: 20px; }
-        .tabs button { padding: 12px 20px; background: #d4af37; border: none; margin-right: 10px; cursor: pointer; font-weight: bold; }
-        .form-box, .carros-list { background: #1a1a1a; border: 2px solid #d4af37; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        .form-box h2, .carros-list h2 { color: #d4af37; margin-bottom:
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+        
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #40c057;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        /* Tabela */
+        .table-wrapper {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: #f8f9fa;
+        }
+        
+        th {
+            padding: 18px;
+            text-align: left;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #555;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .car-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .empty-state {
+            padding: 60px 30px;
+            text-align: center;
+            color: #999;
+        }
+        
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-card .label {
+            color: #999;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .modal-content {
+                padding: 25px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="./index.html" class="back-link">← Voltar à página inicial</a>
+        
+        <div class="alert alert-success" id="successAlert"></div>
+        <div class="alert alert-danger" id="dangerAlert"></div>
+        
+        <div class="header">
+            <div>
+                <h1>🚗 Gerenciador de Carros</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="abrirModalAdicionar()">+ Adicionar Carro</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="label">Total de Carros</div>
+                <div class="value" id="totalCarros">0</div>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <table id="carrosTable">
+                <thead>
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Ano</th>
+                        <th>Preço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+            <div class="empty-state" id="emptyState">
+                <h3>Nenhum carro adicionado</h3>
+                <p>Clique em "+ Adicionar Carro" para começar</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Adicionar/Editar -->
+    <div class="modal" id="carroModal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle">Adicionar Novo Carro</div>
+            
+            <form id="carroForm" onsubmit="salvarCarro(event)">
+                <div class="form-group">
+                    <label for="marca">Marca *</label>
+                    <input type="text" id="marca" required placeholder="Ex: Toyota">
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelo">Modelo *</label>
+                    <input type="text" id="modelo" required placeholder="Ex: Corolla">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ano">Ano *</label>
+                    <input type="number" id="ano" required min="1900" max="2099" placeholder="Ex: 2024">
+                </div>
+                
+                <div class="form-group">
+                    <label for="preco">Preço (R$) *</label>
+                    <input type="number" id="preco" required step="0.01" min="0" placeholder="Ex: 50000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cor">Cor</label>
+                    <input type="text" id="cor" placeholder="Ex: Preto">
+                </div>
+                
+                <div class="form-group">
+                    <label for="combustivel">Combustível</label>
+                    <select id="combustivel">
+                        <option value="">Selecione...</option>
+                        <option value="Gasolina">Gasolina</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Álcool">Álcool</option>
+                        <option value="Híbrido">Híbrido</option>
+                        <option value="Elétrico">Elétrico</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" placeholder="Detalhes adicionais sobre o carro..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="imagem">URL da Imagem</label>
+                    <input type="url" id="imagem" placeholder="https://exemplo.com/carro.jpg">
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar Carro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        let carroEditandoId = null;
+        
+        // Carregar carros do localStorage ao iniciar
+        function carregarCarros() {
+            const carros = JSON.parse(localStorage.getItem('carros')) || [];
+            exibirCarros(carros);
+            atualizarEstatisticas();
+        }
+        
+        // Exibir carros na tabela
+        function exibirCarros(carros) {
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            tableBody.innerHTML = '';
+            
+            if (carros.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            carros.forEach((carro, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        ${carro.imagem ? `<img src="${carro.imagem}" alt="${carro.modelo}" class="car-image" onerror="this.src='https://via.placeholder.com/60?text=Sem+Imagem'">` : '<img src="https://via.placeholder.com/60?text=Sem+Imagem" class="car-image">'}
+                    </td>
+                    <td><strong>${carro.marca}</strong></td>
+                    <td>${carro.modelo}</td>
+                    <td>${carro.ano}</td>
+                    <td><strong>R$ ${parseFloat(carro.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong></td>
+                    <td>
+                        <div class="actions-cell">
+                            <button class="btn btn-secondary btn-small" onclick="editarCarro(${index})">✏️ Editar</button>
+                            <button class="btn btn-danger btn-small" onclick="deletarCarro(${index})">🗑️ Deletar</button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Atualizar estatísticas
+        function atualizarEstatisticas() {
+            const carros = JSON.parse(localStorage.getItem('carros')) || [];
+            document.getElementById('totalCarros').textContent = carros.length;
+        }
+        
+        // Abrir modal para adicionar
+        function abrirModalAdicionar() {
+            carroEditandoId = null;
+            document.getElementById('modalTitle').textContent = 'Adicionar Novo Carro';
+            document.getElementById('carroForm').reset();
+            document.getElementById('carroModal').classList.add('active');
+        }
+        
+        // Abrir modal para editar
+        function editarCarro(index) {
+            const carros = JSON.parse(localStorage.getItem('carros')) || [];
+            const carro = carros[index];
+            
+            carroEditandoId = index;
+            document.getElementById('modalTitle').textContent = 'Editar Carro';
+            document.getElementById('marca').value = carro.marca;
+            document.getElementById('modelo').value = carro.modelo;
+            document.getElementById('ano').value = carro.ano;
+            document.getElementById('preco').value = carro.preco;
+            document.getElementById('cor').value = carro.cor || '';
+            document.getElementById('combustivel').value = carro.combustivel || '';
+            document.getElementById('descricao').value = carro.descricao || '';
+            document.getElementById('imagem').value = carro.imagem || '';
+            
+            document.getElementById('carroModal').classList.add('active');
+        }
+        
+        // Fechar modal
+        function fecharModal() {
+            document.getElementById('carroModal').classList.remove('active');
+        }
+        
+        // Salvar carro
+        function salvarCarro(event) {
+            event.preventDefault();
+            
+            const carro = {
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                ano: parseInt(document.getElementById('ano').value),
+                preco: parseFloat(document.getElementById('preco').value),
+                cor: document.getElementById('cor').value,
+                combustivel: document.getElementById('combustivel').value,
+                descricao: document.getElementById('descricao').value,
+                imagem: document.getElementById('imagem').value
+            };
+            
+            let carros = JSON.parse(localStorage.getItem('carros')) || [];
+            
+            if (carroEditandoId !== null) {
+                // Editando
+                carros[carroEditandoId] = carro;
+                mostrarAlerta('Carro atualizado com sucesso! ✅', 'success');
+            } else {
+                // Adicionando
+                carros.push(carro);
+                mostrarAlerta('Carro adicionado com sucesso! ✅', 'success');
+            }
+            
+            localStorage.setItem('carros', JSON.stringify(carros));
+            exibirCarros(carros);
+            atualizarEstatisticas();
+            fecharModal();
+        }
+        
+        // Deletar carro
+        function deletarCarro(index) {
